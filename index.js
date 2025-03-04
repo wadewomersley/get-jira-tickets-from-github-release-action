@@ -36,11 +36,10 @@ const main = async () => {
         const lines = body.split("\n");
         lines.forEach((line) => {
           const start = "pull/";
-          const end = "\r";
+          const end = "(\r\n|\r|\n)";
           const startCheck = line.split(start)[1];
           if (startCheck) {
             const middle = startCheck.split(end)[0];
-      
             if (middle) {
               prNumbers.push(middle);
             }
@@ -79,8 +78,13 @@ const main = async () => {
       
               addTickets(desclines);
             }
+            const title = pr.title;
+            if (title) {
+              const desclines = title.split("\n");
+      
+              addTickets(desclines);
+            }
           }
-          console.log(jiraTickets);
         };
       
         await getPrs();
